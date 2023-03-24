@@ -12,17 +12,13 @@ public class OKInString
     public static string RemoveOk(string str)
     {
         str = str.ToLower();
-        int index = str.IndexOf("ok");
-
-        if (index != -1)
+        int index;
+        while ((index = str.IndexOf("ok")) != -1)
         {
             string firstPart = str.Substring(0, index);
             string secondPart = str.Substring(index + 2);
-            return firstPart + secondPart;
+            str = firstPart + secondPart;
         }
-        else
-        {
-            return str;
-        }
+        return str;
     }
 }
