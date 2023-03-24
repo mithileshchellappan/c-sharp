@@ -2,13 +2,13 @@
 
 public class Program
 {
-    public static void Main()
-    {
-        string inputString = "hello world";
-        string outputString = ExchangeFirstAndLastCharacters(inputString);
-        Console.WriteLine("Input string: " + inputString);
-        Console.WriteLine("Output string: " + outputString);
-    }
+ //   public static void Main()
+ //   {
+ //       string inputString = "hello world";
+ //       string outputString = ExchangeFirstAndLastCharacters(inputString);
+ //       Console.WriteLine("Input string: " + inputString);
+ //       Console.WriteLine("Output string: " + outputString);
+ //   }
 
     public static string ExchangeFirstAndLastCharacters(string input)
     {
