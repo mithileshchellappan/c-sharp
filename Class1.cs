@@ -1,27 +1,16 @@
-﻿using System;
+﻿using _24_3_Proj;
+using System;
 
-public class Program
+namespace _24_3_Proj
 {
- //   public static void Main()
- //   {
- //       string inputString = "hello world";
- //       string outputString = ExchangeFirstAndLastCharacters(inputString);
- //       Console.WriteLine("Input string: " + inputString);
- //       Console.WriteLine("Output string: " + outputString);
- //   }
-
-    public static string ExchangeFirstAndLastCharacters(string input)
+    internal class MainClass : AccessSpecifiers
     {
-        if (input.Length <= 1)
+        static void Main(string[] args)
         {
-            return input;
-        }
-        else
-        {
-            char firstChar = input[0];
-            char lastChar = input[input.Length - 1];
-            string middleChars = input.Substring(1, input.Length - 2);
-            return lastChar + middleChars + firstChar;
+            //MainClass specifiers = new MainClass(); ;
+            AccessSpecifiers specifiers = new AccessSpecifiers();
+            specifiers.Display("Hello there!");
+            Console.WriteLine(specifiers.name);
         }
     }
 }
