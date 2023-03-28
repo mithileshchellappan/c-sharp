@@ -3,14 +3,14 @@
     internal class Program
     {
         enum days { Monday, Tuesday, Wednesday }
-        static void Main(string[] args)
-        {
-            OverLoading("Mithilesh","PC",days.Tuesday);
-            OverLoading("Mithilesh",33);
+        //static void Main(string[] args)
+        //{
+        //    OverLoading("Mithilesh","PC",days.Tuesday);
+        //    OverLoading("Mithilesh",33);
 
             
 
-        }
+        //}
 
         private static void OverLoading(string name,string lastName,days Day)
         {

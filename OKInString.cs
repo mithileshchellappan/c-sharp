@@ -2,12 +2,12 @@
 
 public class OKInString
 {
-    public static void Main()
-    {
-       string str =  Console.ReadLine();
-        Console.WriteLine(RemoveOk(str));
+    //public static void Main()
+    //{
+    //   string str =  Console.ReadLine();
+    //    Console.WriteLine(RemoveOk(str));
         
-    }
+    //}
 
     public static string RemoveOk(string str)
     {

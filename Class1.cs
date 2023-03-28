@@ -3,7 +3,7 @@ using System;
 
 namespace _24_3_Proj
 {
-    internal class MainClass : AccessSpecifiers
+    internal class MainClass 
     {
         //static void Main(string[] args)
         //{
