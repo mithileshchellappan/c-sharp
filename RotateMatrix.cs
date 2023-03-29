@@ -8,17 +8,17 @@ namespace _24_3_Proj
 {
     internal class RotateMatrix
     {
-        public static void Main(string[] args)
-        {
-            int[,] matrix =
-            {
-                {1,2,3 },
-                {4,5,6 },
-                {7,8,9 }
-            };
+        //public static void Main(string[] args)
+        //{
+        //    int[,] matrix =
+        //    {
+        //        {1,2,3 },
+        //        {4,5,6 },
+        //        {7,8,9 }
+        //    };
 
-            RotateMatrixFunc(matrix, 4);
-        }
+        //    RotateMatrixFunc(matrix, 4);
+        //}
         static void RotateMatrixFunc(int[,] matrix,int rotations,Boolean clockwise=true)
         {
             int rows = matrix.GetLength(0);
