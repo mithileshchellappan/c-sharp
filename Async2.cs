@@ -42,17 +42,17 @@ namespace _24_3_Proj
         }
 
 
-        static async Task Main(string[] args)
-        {
-            Async2 obj = new Async2();
-            var task1 = obj.a();
-            var task2 = obj.b();
-            int number = await task1;
-            var task3 = obj.c(number);
-            // Task.WaitAll(task1,task2);
-            Console.ReadKey();
+        // static async Task Main(string[] args)
+        // {
+        //     Async2 obj = new Async2();
+        //     var task1 = obj.a();
+        //     var task2 = obj.b();
+        //     int number = await task1;
+        //     var task3 = obj.c(number);
+        //     // Task.WaitAll(task1,task2);
+        //     Console.ReadKey();
 
-        }
+        // }
     }
 }
     
