@@ -20,7 +20,7 @@ namespace _24_3_Proj
         {
             SportsManagementSystem st = new SportsManagementSystem();
 
-           st.AddPlayer();
+           st.RemovePlayer();
         }
 
         void AddSports()
@@ -49,7 +49,19 @@ namespace _24_3_Proj
             Console.Write("Enter Tournament ID:");
             int tournamentId = Convert.ToInt32(Console.ReadLine());
             runCommand($"INSERT INTO Player (PlayerName, TournamentID) VALUES ('{playerName}',{tournamentId})");
+            Console.WriteLine("Inserted Player Successfully");
+
             showtable("Player");
+        }
+        void RemovePlayer()
+        {
+            Console.Write("Enter Player ID:");
+            int playerId = Convert.ToInt32(Console.ReadLine());
+            runCommand($"DELETE FROM Player WHERE PlayerID = {playerId}");
+            Console.WriteLine("Deleted Player Successfully");
+
+            showtable("Player");
+
         }
 
         void RemoveScoreboard(int tournamentID = 0) 
