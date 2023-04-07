@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using ConsoleTables;
 
 namespace _24_3_Proj
 {
@@ -12,32 +14,42 @@ namespace _24_3_Proj
     {
         static string connString = "Data Source=5CG6257NNF\\SQLEXPRESS;Initial Catalog=Assessment;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         public SqlConnection connection = new SqlConnection(connString);
-        
-        enum MenuOptions { ADD_SPORTS = 1, ADD_SCOREBOARD, ADD_TOURNAMENT, REMOVE_SPORTS, EDIT_SCOREBOARD, REMOVE_PLAYERS, REMOVE_TOURNAMENT, EXIT };
+        //enum MenuOptions { ADD_SPORTS = 1, ADD_SCOREBOARD, ADD_TOURNAMENT, REMOVE_SPORTS, EDIT_SCOREBOARD, REMOVE_PLAYERS, REMOVE_TOURNAMENT, EXIT };
 
         static void Main(string[] args)
         {
             SportsManagementSystem st = new SportsManagementSystem();
 
-           st.RemoveTournament();
+           st.AddPlayer();
         }
 
         void AddSports()
         {
+            Console.Write("Enter Sport Name:");
             string sportName = Console.ReadLine();
 
             try
             {
-                this.connection.Open();
-                SqlCommand cmd = this.connection.CreateCommand();
-                cmd.CommandText = $"INSERT INTO Sport (SportName) Values ('{sportName}')";
-                cmd.ExecuteReader().Close();
+                runCommand($"INSERT INTO Sport (SportName) Values ('{sportName}')");
                 Console.WriteLine("Added sport");
+                showtable("Sport");
 
-            }catch (Exception e)
+
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("Err" + e.Message);
             }
+        }
+
+        void AddPlayer()
+        {
+            Console.Write("Enter PlayerName:");
+            string playerName = Console.ReadLine();
+            Console.Write("Enter Tournament ID:");
+            int tournamentId = Convert.ToInt32(Console.ReadLine());
+            runCommand($"INSERT INTO Player (PlayerName, TournamentID) VALUES ('{playerName}',{tournamentId})");
+            showtable("Player");
         }
 
         void RemoveScoreboard(int tournamentID = 0) 
@@ -47,8 +59,9 @@ namespace _24_3_Proj
                 Console.Write("Enter Scoreboard ID to remove:");
                 int sbID = Convert.ToInt32(Console.ReadLine());
                 runCommand($"DELETE FROM Scoreboard WHERE ScoreboardID = {sbID}");
-
                 Console.WriteLine("Deleted Successfully");
+                showtable("Scoreboard");
+
             }
             else
             {
@@ -69,6 +82,8 @@ namespace _24_3_Proj
             int tournamentId = random.Next(100000, 999999);
            runCommand($"INSERT INTO Tournament (TournamentName,SportID) VALUES ('{tName}',{sportId})");
              Console.WriteLine("Tournament Added Successfully");
+            showtable("Tournament");
+
 
         }
 
@@ -80,7 +95,8 @@ namespace _24_3_Proj
                 int tournamentId = Convert.ToInt32(Console.ReadLine());
                 RemoveScoreboard(tournamentId);
                 runCommand($"DELETE FROM Tournament WHERE TournamentID = {tournamentId}");
-                Console.Write("Deleted Successfully");
+                Console.WriteLine("Deleted Successfully");
+                showtable("Tournament");
 
             }
             catch(Exception E)
@@ -96,7 +112,9 @@ namespace _24_3_Proj
             int score = Convert.ToInt32(Console.ReadLine());
 
             runCommand($"UPDATE Scoreboard SET Score = {score} WHERE ScoreboardID = {sbId}");
-            Console.Write("Updated Successfully");
+            Console.WriteLine("Updated Successfully");
+            showtable("Scoreboard");
+
         }
         void AddScoreboard()
         {
@@ -105,7 +123,9 @@ namespace _24_3_Proj
             Console.Write("Enter Scoreboard Name:");
             string sbName = Console.ReadLine();
             Random random = new Random();
-             runCommand($"INSERT INTO Scoreboard (TournamentID, ScoreboardName,Score) VALUES ({tournamentId},'{sbName}',0)");
+            runCommand($"INSERT INTO Scoreboard (TournamentID, ScoreboardName,Score) VALUES ({tournamentId},'{sbName}',0)");
+            Console.WriteLine("Inserted Successfully");
+            showtable("Scoreboard");
 
 
         }
@@ -130,14 +150,37 @@ namespace _24_3_Proj
             }
 
         }
-        //private void ShowTable(string tableName)
-        //{
-        //    this.connection.Open();
-        //    SqlCommand cmd = this.connection.CreateCommand();
-        //    cmd.CommandText = $"SELECT * FROM {tableName}";
+        private void showtable(string tableName)
+        {
+            string query = $"SELECT * FROM {tableName}";
+            SqlCommand command = new SqlCommand(query, this.connection);
+            if (this.connection.State == ConnectionState.Closed)
+            {
+                this.connection.Open();
+            }
+            SqlDataReader rd = command.ExecuteReader();
+            var table = new ConsoleTable();
+
+            //Console.WriteLine(rd.FieldCount);
+            //Console.Write("Index \t");
+            List<string> columnNames = new List<String>();
+            for (int i = 0; i <rd.FieldCount; i++)//columns
+            {
+                string columnName = Convert.ToString(rd.GetName(i));
+                columnNames.Add(columnName);
+            }
+            table.AddColumn(columnNames);
+            while (rd.Read())
+            {
+                object[] rowValues = new object[rd.FieldCount];
+                rd.GetValues(rowValues);
+                table.AddRow(rowValues);
+            }
+            Console.WriteLine(table.ToString());
 
 
 
-        //}
+
+        }
     }
 }
