@@ -20,7 +20,7 @@ namespace _24_3_Proj
         {
             SportsManagementSystem st = new SportsManagementSystem();
 
-           st.RemovePlayer();
+            st.RemoveSports();
         }
 
         void AddSports()
@@ -32,6 +32,34 @@ namespace _24_3_Proj
             {
                 runCommand($"INSERT INTO Sport (SportName) Values ('{sportName}')");
                 Console.WriteLine("Added sport");
+                showtable("Sport");
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Err" + e.Message);
+            }
+        }
+        void RemoveSports()
+        {
+            Console.Write("Enter Sport ID to remove:");
+            string sportID = Console.ReadLine();
+
+            try
+            {
+                string output = runCommand($"DELETE FROM Scoreboard WHERE TournamentID IN (SELECT TournamentID From Tournament WHERE SportID = {sportID})");
+                Console.WriteLine("Done ScoreBoard");
+                runCommand($"DELETE FROM Player WHERE TournamentID IN (SELECT TournamentID From Tournament WHERE SportID = {sportID})");
+                Console.WriteLine("Done Player");
+
+                runCommand($"DELETE FROM Tournament WHERE SportID = {sportID}");
+                Console.WriteLine("Done Tournamnet");
+
+                runCommand($"DELETE FROM Sport WHERE SportID = {sportID}");
+                Console.WriteLine("Deleted Sport and all its related Tournaments, ScoreBoard, and Players");
+
+
                 showtable("Sport");
 
 
@@ -141,27 +169,37 @@ namespace _24_3_Proj
 
 
         }
-        private void runCommand(string command)
+        private string runCommand(string command)
         {
+            string result = "";
             try
             {
                 if (this.connection.State == ConnectionState.Closed)
                 {
-
-                this.connection.Open();
+                    this.connection.Open();
                 }
                 SqlCommand cmd = this.connection.CreateCommand();
                 cmd.CommandText = command;
-                cmd.ExecuteReader().Close();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        result += reader[i].ToString() + " ";
+                    }
+                    result += Environment.NewLine;
+                }
+                reader.Close();
                 this.connection.Close();
-
             }
             catch (Exception e)
             {
                 Console.WriteLine("Err" + e.Message);
             }
-
+            return result;
         }
+
+
         private void showtable(string tableName)
         {
             string query = $"SELECT * FROM {tableName}";
