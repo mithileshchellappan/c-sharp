@@ -1,0 +1,48 @@
+﻿@page
+@model WebApplication1.Pages.Book.IndexModel
+@{
+}
+
+<br />
+<div>
+    <div>
+        <a class='btn-primary btn-sm' href="/Book/CreateBook">Create new book</a>
+        
+</div>
+    <h1>Books list</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Book title
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.bookList)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.BookName</td>
+                    <td>@book.price</td>
+                    <td>
+                        <a class="btn-primary" href="/Book/UpdateBook?BookCode=@book.Id">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn-primary" href="/Book/DeleteBook?BookCode=@book.Id">Delete</a>
+                    </td>
+                </tr>
+                
+            }
+        </tbody>
+
+    </table>
+</div>
+
+
