@@ -1,0 +1,18 @@
+﻿@model TextEditor
+@{
+    ViewData["Title"] = "Index";
+}
+<h3 class="text-success mb-4">Create File</h3>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Name"><b>File name</b></label>
+        <input asp-for="Name" class="form-control" type="text" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <label asp-for="Content"><b>Content</b></label>
+    <textarea asp-for="Content" class="form-control" rows="10"></textarea>
+    <br />
+    <button type="submit" class="btn btn-success" style="width:150px;">
+        Save
+    </button>
+</form>1

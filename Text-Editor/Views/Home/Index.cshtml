@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">TextEditor</h1>
+    <p class="text-center">Click the button below to enter the editor.</p>
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-outline-success btn-lg" asp-controller="Texteditor" asp-action="Index">Enter Editor</a> <br />
+        <a class="btn btn-outline-primary btn-lg ml-4" asp-controller="Texteditor" asp-action="List of Files"></a>
+    </div>
+
+</div>
