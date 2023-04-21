@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MobileRecharge.Models;
 
 namespace MobileRecharge.Data
 {
@@ -9,5 +10,6 @@ namespace MobileRecharge.Data
             : base(options)
         {
         }
+        public DbSet<MobileRecharge.Models.RechargeModel>? RechargeModel { get; set; }
     }
 }
